@@ -7,4 +7,9 @@ public class Start_Button : MonoBehaviour
     {
         SceneManager.LoadScene("OverWorld");
     }
+
+    public void StartScene()
+    {
+        SceneManager.LoadScene("Cutscene");
+    }
 }
