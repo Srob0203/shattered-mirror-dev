@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -6,3 +7,28 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 *.log
+=======
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+
+.vscode/
+.vs/
+
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+.DS_Store
+Thumbs.db
+>>>>>>> feature/marvin-main-menu

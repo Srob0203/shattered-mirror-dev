@@ -4,7 +4,11 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
+<<<<<<< HEAD
   productGUID: 6e46882b68f91044f96179bff4f3dd9d
+=======
+  productGUID: ef2095ee6b95b9844b8978147df54f76
+>>>>>>> feature/marvin-main-menu
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +17,11 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
+<<<<<<< HEAD
   productName: Shattered Mirror
+=======
+  productName: My project
+>>>>>>> feature/marvin-main-menu
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -604,14 +612,22 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
+<<<<<<< HEAD
   metroPackageName: Shattered Mirror
+=======
+  metroPackageName: My project
+>>>>>>> feature/marvin-main-menu
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
+<<<<<<< HEAD
   metroApplicationDescription: Shattered Mirror
+=======
+  metroApplicationDescription: My project
+>>>>>>> feature/marvin-main-menu
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -680,6 +696,7 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
+<<<<<<< HEAD
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
   cloudProjectId: 5d23ba5f-9987-4c3b-b397-bcd83ad1a85b
@@ -687,6 +704,15 @@ PlayerSettings:
   qualitySettingsNames: []
   projectName: Shattered Mirror
   organizationId: simonesays3
+=======
+  activeInputHandler: 2
+  windowsGamepadBackendHint: 0
+  cloudProjectId: 9b89d74a-019b-4f39-ba71-e15d685e3ddb
+  framebufferDepthMemorylessMode: 0
+  qualitySettingsNames: []
+  projectName: My project
+  organizationId: zamen
+>>>>>>> feature/marvin-main-menu
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
