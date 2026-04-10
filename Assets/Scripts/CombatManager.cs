@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CombatManager : MonoBehaviour
@@ -12,11 +13,13 @@ public class CombatManager : MonoBehaviour
         Lost,
         Escaped
     }
+    public Button[] itemButtons;
+    public TMP_Text[] itemButtonTexts;
 
     public BattleState state;
 
     [Header("Player Stats")]
-    public int playerHP = 50;
+    //public int playerHP = 50;
     public int playerMaxHP = 50;
     public int playerDamage = 10;
     public int potionCount = 2;
@@ -42,7 +45,7 @@ public class CombatManager : MonoBehaviour
         state = BattleState.Start;
 
         battleText.text = "A wild " + enemyName + " appeared!";
-
+        LoadInventory();
         UpdateUI();
 
         bool playerGoesFirst = Random.value < 0.5f;
@@ -60,9 +63,69 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+void LoadInventory()
+{
+    Debug.Log("Player Inventory:");
+    if(GameManager.Instance.inventory == null || GameManager.Instance.inventory.Count ==0){
+        LoadDefaultTestInventory();
+    }
+    else{
+    foreach (Item item in GameManager.Instance.inventory)
+    {
+        Debug.Log(item.itemName + ": " + item.quantity);
+    }
+    }
+}
+void LoadDefaultTestInventory()
+{
+    if (GameManager.Instance.inventory.Count == 0)
+    {
+        GameManager.Instance.AddItem("Potion", 2);
+        GameManager.Instance.AddItem("Quick Tonic", 1);
+        
+
+        for (int i = 0; i < itemButtons.Length; i++)
+    {
+        itemButtons[i].gameObject.SetActive(false);
+    }
+
+    for (int i = 0; i < GameManager.Instance.inventory.Count && i < itemButtons.Length; i++)
+    {
+        Item item = GameManager.Instance.inventory[i];
+
+        itemButtons[i].gameObject.SetActive(true);
+        itemButtonTexts[i].text = item.itemName + " x" + item.quantity;
+
+        
+    }
+    Debug.Log("Loaded default test inventory (items).");
+}
+if (GameManager.Instance.weapons.Count == 0)
+    {
+        GameManager.Instance.AddWeapon("Sword", 5, 0.4f);
+        GameManager.Instance.AddWeapon("Axe", 10, 0.2f);
+        
+
+        for (int i = 0; i < itemButtons.Length; i++)
+    {
+        itemButtons[i].gameObject.SetActive(false);
+    }
+
+    for (int i = 0; i < GameManager.Instance.weapons.Count && i < itemButtons.Length; i++)
+    {
+        Weapon weapon = GameManager.Instance.weapons[i];
+
+        itemButtons[i].gameObject.SetActive(true);
+        itemButtonTexts[i].text = weapon.weaponName;
+
+        
+    }
+    Debug.Log("Loaded default test inventory (weapons).");
+}
+}
     void UpdateUI()
     {
-        playerHPText.text = "Player HP: " + playerHP;
+        playerHPText.text = "Player HP: " + GameManager.Instance.playerHP;
         enemyHPText.text = enemyName + " HP: " + enemyHP;
     }
 
@@ -86,27 +149,27 @@ public class CombatManager : MonoBehaviour
         Invoke(nameof(EnemyTurn), 1f);
     }
 
-    public void UseItem()
-    {
-        if (state != BattleState.PlayerTurn) return;
+    // public void UseItem()
+    // {
+    //     if (state != BattleState.PlayerTurn) return;
 
-        if (potionCount <= 0)
-        {
-            battleText.text = "No potions left!";
-            return;
-        }
+    //     if (potionCount <= 0)
+    //     {
+    //         battleText.text = "No potions left!";
+    //         return;
+    //     }
 
-        potionCount--;
-        playerHP += potionHeal;
-        playerHP = Mathf.Min(playerHP, playerMaxHP);
+    //     potionCount--;
+    //     playerHP += potionHeal;
+    //     playerHP = Mathf.Min(playerHP, playerMaxHP);
 
-        battleText.text = "Used potion! Restored " + potionHeal + " HP.";
+    //     battleText.text = "Used potion! Restored " + potionHeal + " HP.";
 
-        UpdateUI();
+    //     UpdateUI();
 
-        state = BattleState.EnemyTurn;
-        Invoke(nameof(EnemyTurn), 1f);
-    }
+    //     state = BattleState.EnemyTurn;
+    //     Invoke(nameof(EnemyTurn), 1f);
+    // }
 
     public void CheckEnemy()
     {
@@ -143,13 +206,13 @@ public class CombatManager : MonoBehaviour
     {
         if (state != BattleState.EnemyTurn) return;
 
-        playerHP -= enemyDamage;
+        GameManager.Instance.playerHP -= enemyDamage;
 
         battleText.text = enemyName + " attacked for " + enemyDamage + " damage!";
 
         UpdateUI();
 
-        if (playerHP <= 0)
+        if (GameManager.Instance.playerHP <= 0)
         {
             state = BattleState.Lost;
             EndBattle();
@@ -159,6 +222,79 @@ public class CombatManager : MonoBehaviour
         state = BattleState.PlayerTurn;
         battleText.text += "\nYour turn!";
     }
+    public void UsePotion()
+{
+    if (state != BattleState.PlayerTurn) return;
+
+    bool success = GameManager.Instance.UseItem("Potion");
+
+    if (!success)
+    {
+        battleText.text = "No potion available!";
+        return;
+    }
+
+    GameManager.Instance.playerHP += 20;
+    GameManager.Instance.playerHP = Mathf.Min(GameManager.Instance.playerHP, playerMaxHP);
+
+    battleText.text = "Used Potion! Restored 20 HP.";
+
+    UpdateUI();
+
+    state = BattleState.EnemyTurn;
+    //Debug.Log("Moving to enemy turn");
+    Invoke(nameof(EnemyTurn), 1f);
+}
+
+public void UseWeapon(int index){
+        if (state != BattleState.PlayerTurn) return;
+
+    if(index >=GameManager.Instance.weapons.Count) return;
+    Weapon weapon = GameManager.Instance.weapons[index];
+    bool crit = Random.value < weapon.critChance;
+    int damage = weapon.attack;
+    if(crit){
+        damage*=2;
+    }
+    enemyHP -= damage;
+    battleText.text = "You attacked " + enemyName + " for " + damage + " damage!";
+
+        UpdateUI();
+
+        if (enemyHP <= 0)
+        {
+            state = BattleState.Won;
+            EndBattle();
+            return;
+        }
+
+        state = BattleState.EnemyTurn;
+        Invoke(nameof(EnemyTurn), 1f);
+}
+
+
+public void UseQuickTonic()
+{
+    if (state != BattleState.PlayerTurn) return;
+
+    bool success = GameManager.Instance.UseItem("Quick Tonic");
+
+    if (!success)
+    {
+        battleText.text = "No quick tonic available!";
+        return;
+    }
+
+    
+
+    battleText.text = "Quick tonic skipped the enemy's turn!";
+    state = BattleState.PlayerTurn;
+    battleText.text += "\nYour turn!";
+
+    UpdateUI();
+
+}
+
 
     void EndBattle()
     {
