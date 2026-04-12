@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Cutscene");
     }
 
     public void QuitGame(){
@@ -16,9 +16,9 @@ public class MainMenu : MonoBehaviour
     }
 
     public void OpenSettings()
-{
-    SceneManager.LoadScene("SettingsScene"); //TO BE WRITTEN
-}
+    {
+        SceneManager.LoadScene("SettingsScene"); //TO BE WRITTEN
+    }
 
     // Update is called once per frame
     void Update()
