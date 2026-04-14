@@ -17,6 +17,7 @@ public class CombatManager : MonoBehaviour
     public TMP_Text[] itemButtonTexts;
 
     public BattleState state;
+    public int playerTurns = 1;
 
     [Header("Player Stats")]
     //public int playerHP = 50;
@@ -25,9 +26,12 @@ public class CombatManager : MonoBehaviour
     public int potionCount = 2;
     public int potionHeal = 20;
 
+    public Slider PlayerHealth;
+    public Slider EnemyHealth;
+
     [Header("Enemy Stats")]
     public string enemyName = "Dragon";
-    public int enemyHP = 30;
+    public int enemyHP = 50;
     public int enemyDamage = 6;
 
     [Header("UI")]
@@ -62,6 +66,8 @@ public class CombatManager : MonoBehaviour
             Invoke(nameof(EnemyTurn), 1.5f);
         }
     }
+
+
 
 void LoadInventory()
 {
@@ -102,8 +108,8 @@ void LoadDefaultTestInventory()
 }
 if (GameManager.Instance.weapons.Count == 0)
     {
-        GameManager.Instance.AddWeapon("Sword", 5, 0.4f);
-        GameManager.Instance.AddWeapon("Axe", 10, 0.2f);
+        GameManager.Instance.AddWeapon("Sword", 5, 0.3f);
+        GameManager.Instance.AddWeapon("Axe", 7, 0.1f);
         
 
         for (int i = 0; i < itemButtons.Length; i++)
@@ -125,9 +131,20 @@ if (GameManager.Instance.weapons.Count == 0)
 }
     void UpdateUI()
     {
-        playerHPText.text = "Player HP: " + GameManager.Instance.playerHP;
-        enemyHPText.text = enemyName + " HP: " + enemyHP;
+        playerHPText.text = GameManager.Instance.playerHP.ToString();
+        if(enemyHP<=0){
+            enemyHP = 0;
+        }
+        enemyHPText.text = enemyHP.ToString();
+        UpdateHealthUI();
     }
+
+    public void UpdateHealthUI()
+{
+    PlayerHealth.value = GameManager.Instance.playerHP;
+    EnemyHealth.value = enemyHP;
+
+}
 
     public void PlayerAttack()
     {
@@ -140,6 +157,7 @@ if (GameManager.Instance.weapons.Count == 0)
 
         if (enemyHP <= 0)
         {
+            
             state = BattleState.Won;
             EndBattle();
             return;
@@ -214,6 +232,7 @@ if (GameManager.Instance.weapons.Count == 0)
 
         if (GameManager.Instance.playerHP <= 0)
         {
+            GameManager.Instance.playerHP = 0;
             state = BattleState.Lost;
             EndBattle();
             return;
@@ -267,9 +286,14 @@ public void UseWeapon(int index){
             EndBattle();
             return;
         }
-
+        if(playerTurns>1){
+            playerTurns--;
+            battleText.text += "\nYour turn!";
+        }
+        else{
         state = BattleState.EnemyTurn;
         Invoke(nameof(EnemyTurn), 1f);
+        }
 }
 
 
@@ -288,10 +312,16 @@ public void UseQuickTonic()
     
 
     battleText.text = "Quick tonic skipped the enemy's turn!";
+    
+    
     state = BattleState.PlayerTurn;
+    playerTurns = 2;
     battleText.text += "\nYour turn!";
-
+    
     UpdateUI();
+    
+
+    
 
 }
 
