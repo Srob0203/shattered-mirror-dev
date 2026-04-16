@@ -15,6 +15,9 @@ public class CombatManager : MonoBehaviour
     }
     public Button[] itemButtons;
     public TMP_Text[] itemButtonTexts;
+     public GameObject itemPanel;
+    public GameObject attackPanel;
+
 
     public BattleState state;
     public int playerTurns = 1;
@@ -42,6 +45,7 @@ public class CombatManager : MonoBehaviour
     void Start()
     {
         StartBattle();
+        ShowAttack();
     }
 
     void StartBattle()
@@ -129,6 +133,19 @@ if (GameManager.Instance.weapons.Count == 0)
     Debug.Log("Loaded default test inventory (weapons).");
 }
 }
+public void ShowItems()
+    {
+       
+        itemPanel.SetActive(true);
+        attackPanel.SetActive(false);
+    }
+
+    public void ShowAttack()
+    {
+        
+        itemPanel.SetActive(false);
+        attackPanel.SetActive(true);
+    }
     void UpdateUI()
     {
         playerHPText.text = GameManager.Instance.playerHP.ToString();
