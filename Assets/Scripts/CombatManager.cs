@@ -18,6 +18,8 @@ public class CombatManager : MonoBehaviour
      public GameObject itemPanel;
     public GameObject attackPanel;
 
+    public static Scene_Manager Instance;
+
 
     public BattleState state;
     public int playerTurns = 1;
@@ -214,7 +216,7 @@ public void ShowItems()
                           "\nAttack: " + enemyDamage;
 
         state = BattleState.EnemyTurn;
-        Invoke(nameof(EnemyTurn), 2f);
+        Invoke(nameof(EnemyTurn), 5f);
     }
 
     public void TryEscape()
@@ -233,7 +235,7 @@ public void ShowItems()
         {
             battleText.text = "Escape failed!";
             state = BattleState.EnemyTurn;
-            Invoke(nameof(EnemyTurn), 1f);
+            Invoke(nameof(EnemyTurn), 5f);
         }
     }
 
@@ -279,7 +281,7 @@ public void ShowItems()
 
     state = BattleState.EnemyTurn;
     //Debug.Log("Moving to enemy turn");
-    Invoke(nameof(EnemyTurn), 1f);
+    Invoke(nameof(EnemyTurn), 5f);
 }
 
 public void UseWeapon(int index){
@@ -309,7 +311,7 @@ public void UseWeapon(int index){
         }
         else{
         state = BattleState.EnemyTurn;
-        Invoke(nameof(EnemyTurn), 1f);
+        Invoke(nameof(EnemyTurn), 5f);
         }
 }
 
@@ -359,5 +361,6 @@ public void UseQuickTonic()
         }
 
         // Add return to overworld here
+        Scene_Manager.Instance.LoadScene("Overworld2");
     }
 }

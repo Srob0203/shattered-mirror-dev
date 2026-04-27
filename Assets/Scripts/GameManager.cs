@@ -27,9 +27,12 @@ public class Weapon{
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
+    
+    public Vector2 playerPosition;
     public int playerHP = 50;
     public int playerMaxHP = 50;
+    public bool returningFromBattle = false;
+    public bool isTransitioning = false;
 
     public List<Item> inventory = new List<Item>();
     public List<Weapon> weapons = new List <Weapon>();
@@ -118,5 +121,23 @@ public class GameManager : MonoBehaviour
         }
 
         return 0;
+    }
+     public void TryEncounter()
+    {
+        float chance = 0.2f; // tweak this
+
+        if (Random.value < chance)
+        {
+            StartBattle();
+        }
+    }
+
+    void StartBattle()
+    {
+        // set enemy, store data, etc.
+        GameManager.Instance.playerPosition = transform.position;
+        GameManager.Instance.returningFromBattle = true;
+        GameManager.Instance.isTransitioning = true;
+        Scene_Manager.Instance.LoadScene("RecoveredScene");
     }
 }
