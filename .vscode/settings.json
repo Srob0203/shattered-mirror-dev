@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Shattered Mirror.slnx"
+    "dotnet.defaultSolution": "shattered-mirror-dev.slnx"
 }

@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void StartGame()
     {
-        SceneManager.LoadScene("Cutscene");
+        SceneManager.LoadScene("OverWorld");
     }
 
     public void QuitGame(){
@@ -15,9 +15,14 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Quit game");
     }
 
+    public void ContinueGame()
+    {
+        Debug.Log("Continues from last saved game - WIP");
+    }   
+
     public void OpenSettings()
     {
-        SceneManager.LoadScene("SettingsScene"); //TO BE WRITTEN
+        Debug.Log("Settings Screen - WIP"); //TO BE WRITTEN
     }
 
     // Update is called once per frame
