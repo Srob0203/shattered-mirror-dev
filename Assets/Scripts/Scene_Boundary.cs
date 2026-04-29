@@ -8,6 +8,7 @@ public class Scene_Boundary : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Transition triggered");
             Scene_Manager.Instance.LoadScene(sceneToLoad);
         }
     }

@@ -5,6 +5,7 @@ using SceneManager = UnityEngine.SceneManagement.SceneManager;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+
 [System.Serializable]
 public class Item
 {
@@ -36,7 +37,7 @@ public class Weapon
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    
+    public static bool isLoadingBattle = false;
     public Vector2 playerPosition;
     public int playerHP = 50;
     public int playerMaxHP = 50;
@@ -61,15 +62,21 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+       
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        else if(Instance!=null && Instance !=this){
+            Destroy(gameObject);
+            return;
+        }
         else
         {
             Destroy(gameObject);
         }
+        
 
         player = GameObject.Find("Player");
         InventoryMenu = GameObject.Find("Inventory");
@@ -279,10 +286,15 @@ public class GameManager : MonoBehaviour
 
     void StartBattle()
     {
+
+        if (isLoadingBattle) return;
+
+        isLoadingBattle = true;
         // set enemy, store data, etc.
         GameManager.Instance.playerPosition = transform.position;
         GameManager.Instance.returningFromBattle = true;
         GameManager.Instance.isTransitioning = true;
+        player.SetActive(false);
         Scene_Manager.Instance.LoadScene("RecoveredScene");
     }
 }

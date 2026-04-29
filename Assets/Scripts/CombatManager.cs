@@ -46,6 +46,7 @@ public class CombatManager : MonoBehaviour
 
     void Start()
     {
+        GameManager.isLoadingBattle = false;
         StartBattle();
         ShowAttack();
     }
@@ -183,7 +184,7 @@ public void ShowItems()
         }
 
         state = BattleState.EnemyTurn;
-        Invoke(nameof(EnemyTurn), 1f);
+        Invoke(nameof(EnemyTurn), 2.5f);
     }
 
     // public void UseItem()
@@ -216,7 +217,7 @@ public void ShowItems()
                           "\nAttack: " + enemyDamage;
 
         state = BattleState.EnemyTurn;
-        Invoke(nameof(EnemyTurn), 5f);
+        Invoke(nameof(EnemyTurn), 2.5f);
     }
 
     public void TryEscape()
@@ -235,7 +236,7 @@ public void ShowItems()
         {
             battleText.text = "Escape failed!";
             state = BattleState.EnemyTurn;
-            Invoke(nameof(EnemyTurn), 5f);
+            Invoke(nameof(EnemyTurn), 2.5f);
         }
     }
 
@@ -281,7 +282,7 @@ public void ShowItems()
 
     state = BattleState.EnemyTurn;
     //Debug.Log("Moving to enemy turn");
-    Invoke(nameof(EnemyTurn), 5f);
+    Invoke(nameof(EnemyTurn), 2.5f);
 }
 
 public void UseWeapon(int index){
@@ -311,7 +312,7 @@ public void UseWeapon(int index){
         }
         else{
         state = BattleState.EnemyTurn;
-        Invoke(nameof(EnemyTurn), 5f);
+        Invoke(nameof(EnemyTurn), 2.5f);
         }
 }
 
@@ -359,6 +360,7 @@ public void UseQuickTonic()
                 battleText.text = "You escaped!";
                 break;
         }
+        
 
         // Add return to overworld here
         Scene_Manager.Instance.LoadScene("Overworld2");
