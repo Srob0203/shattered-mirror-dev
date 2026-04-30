@@ -17,7 +17,7 @@ public class Player_Controller : MonoBehaviour
         transform.position = GameManager.Instance.playerPosition;
         GameManager.Instance.returningFromBattle = false;
         }
-
+        
         if (rb == null) Debug.LogError("No Rigidbody2D found on player!");
         if (animator == null) Debug.LogError("No Animator found on player!");
     }
@@ -47,11 +47,16 @@ public class Player_Controller : MonoBehaviour
     //encounter enemies (on trigger only)
     void OnTriggerStay2D(Collider2D other)
 {
+     //if (!other.CompareTag("Player")) return;
+    Debug.Log("In the grass");
+    if (!GameManager.canEncounter) return;
+
+    //GameManager.Instance.TryEncounter();
     if (other.CompareTag("EncounterZone"))
     {
         //Debug.Log(Scene_Manager.Instance);
         GameManager.Instance.playerPosition = transform.position;
-
+         Debug.Log("Encounter Tried");
         GameManager.Instance.TryEncounter();
     }
 }

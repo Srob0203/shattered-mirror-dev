@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     public int playerMaxHP = 50;
     public bool returningFromBattle = false;
     public bool isTransitioning = false;
+    public static bool canEncounter = true;
 
     public List<Item> inventory = new List<Item>();
     public List<Weapon> weapons = new List<Weapon>();
@@ -83,6 +84,7 @@ public class GameManager : MonoBehaviour
         Inventory_Options = GameObject.Find("Inventory_Options");
         DontDestroyOnLoad(InventoryMenu);
         InventoryMenu.SetActive(false);
+        StartCoroutine(ReenableEncounters());
     }
 
     void OnEnable()
@@ -112,6 +114,14 @@ public class GameManager : MonoBehaviour
             StartCoroutine(ToggleInventory());
         }
     }
+
+    IEnumerator ReenableEncounters()
+{
+    yield return new WaitForSeconds(1f); // small buffer
+
+    GameManager.canEncounter = true;
+    GameManager.isLoadingBattle = false;
+}
 
     public IEnumerator ToggleInventory()
     {
@@ -286,7 +296,7 @@ public class GameManager : MonoBehaviour
 
     void StartBattle()
     {
-
+        Debug.Log("Battle loading");
         if (isLoadingBattle) return;
 
         isLoadingBattle = true;

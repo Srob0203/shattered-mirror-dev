@@ -47,6 +47,7 @@ public class CombatManager : MonoBehaviour
     void Start()
     {
         GameManager.isLoadingBattle = false;
+        GameManager.canEncounter = false;
         StartBattle();
         ShowAttack();
     }
@@ -363,6 +364,7 @@ public void UseQuickTonic()
         
 
         // Add return to overworld here
+        
         Scene_Manager.Instance.LoadScene("Overworld2");
     }
 }
